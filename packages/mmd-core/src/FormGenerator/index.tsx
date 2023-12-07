@@ -1,4 +1,4 @@
-import { FormSchema } from "./types/FormSchema";
+import { FormSchema } from "../types/FormSchema";
 import { Form, Formik, FormikValues } from "formik";
 
 export interface FormGeneratorProps {
