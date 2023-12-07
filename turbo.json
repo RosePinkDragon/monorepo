@@ -17,6 +17,11 @@
     },
     "clean": {
       "cache": false
+    },
+    "changeset": {},
+    "version-packages": {},
+    "release": {
+      "dependsOn": ["^changeset", "^version-packages"]
     }
   }
 }

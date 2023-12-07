@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ["@acme/eslint-config/library.js"],
+  extends: ["@mmd/eslint-config/library.js"],
 };
