@@ -1,55 +1,73 @@
-import { FormSchema } from "../types/FormSchema";
-import { Form, Formik, FormikValues } from "formik";
+import { Formik, Form } from "formik";
+import { useMemo } from "react";
+import FormSection from "./FormSection";
 
-export interface FormGeneratorProps {
-  formData: FormSchema;
-  initialValues?: FormikValues;
-}
+import getInitialValuesFromForm from "../utils/getInitialValuesFromForm";
+import { FormHeading } from "./FormComponents";
+import { IFormGeneratorProps } from "../types/formGenerator";
+import createValidationSchema from "../utils/validationSchemaGenerator";
 
-export function FormGenerator({
+const FormGenerator = ({
   formData,
-  initialValues,
-}: Readonly<FormGeneratorProps>) {
+  AfterFieldComponent,
+  FormEndComponent,
+  extendedSchema,
+  initialFormErrors,
+  initialFormValues,
+  isViewOnly,
+  submitHandler,
+}: Readonly<IFormGeneratorProps>) => {
+  const validationSchema = useMemo(
+    () => createValidationSchema(formData, extendedSchema),
+    [extendedSchema, formData]
+  );
+
+  const { sections: formSections } = formData;
+
+  const genInitialValues = () => {
+    const initialValuesFromForm = getInitialValuesFromForm(formSections);
+    if (!initialFormValues) return initialValuesFromForm;
+    return { ...initialFormValues, ...initialValuesFromForm };
+  };
+
+  const initialValues = genInitialValues();
+
   return (
     <Formik
-      initialValues={initialValues ?? {}}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log(values);
-          setSubmitting(false);
-        }, 400);
+      initialErrors={initialFormErrors}
+      initialTouched={initialFormErrors}
+      validateOnMount={Boolean(initialFormErrors)}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={(values, act) => {
+        if (!isViewOnly && submitHandler) submitHandler({ values, act });
       }}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        /* and other goodies */
-      }) => (
-        <Form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-          />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+      {({ handleSubmit, values }) => (
+        <Form onSubmit={isViewOnly ? () => {} : handleSubmit}>
+          {formData.name && <FormHeading heading={formData.name} />}
+          {formSections.map((section) => {
+            if (
+              section.enabledOnValue &&
+              section.sectionDependentOn &&
+              values[section.sectionDependentOn ?? ""] !==
+                section.enabledOnValue
+            ) {
+              return null;
+            }
+            return (
+              <FormSection
+                {...section}
+                AfterFieldComponent={AfterFieldComponent}
+              />
+            );
+          })}
+
+          {FormEndComponent}
         </Form>
       )}
     </Formik>
   );
-}
+};
 
-FormGenerator.displayName = "FormGenerator";
+export default FormGenerator;

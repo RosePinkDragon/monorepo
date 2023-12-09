@@ -1,4 +1,5 @@
-import type { FormField } from "./FormField";
-import type { FormSchema } from "./FormSchema";
+import type { TFormField } from "./formField";
+import type { TFormSchema } from "./formSchema";
+import type { TFormSection } from "./formSection";
 
-export { FormField, FormSchema };
+export { TFormField, TFormSchema, TFormSection };

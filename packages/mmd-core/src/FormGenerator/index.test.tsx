@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { test } from "vitest";
 
-import { FormGenerator } from "./index";
+import FormGenerator from "./index";
 import formData from "../data/testForm";
 
 test("render correctly", () => {

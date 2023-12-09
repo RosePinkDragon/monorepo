@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { TextFieldProps } from "../types/FormField";
+import { TextFieldProps } from "../../types/formField";
 
 const TextInput = ({ field }: { field: TextFieldProps }) => {
   const { name, label, type, required, placeholder } = field;

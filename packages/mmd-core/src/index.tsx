@@ -1,2 +1,4 @@
-export { FormGenerator, type FormGeneratorProps } from "./FormGenerator";
-export type { FormField, FormSchema } from "./types";
+import FormGenerator from "./FormGenerator";
+
+export default FormGenerator;
+export type { TFormField, TFormSchema, TFormSection } from "./types";

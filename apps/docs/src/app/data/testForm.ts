@@ -1,12 +1,12 @@
-import { FormSchema } from "@mmd/core";
+import { TFormSchema } from "@mmd/core";
 
-const formData: FormSchema = {
+const formData: TFormSchema = {
   name: "form name",
   sections: [
     {
       name: "section1Name",
       label: "section label",
-      fields: [
+      formFields: [
         {
           name: "field1Name",
           label: "field label",
@@ -23,7 +23,7 @@ const formData: FormSchema = {
     {
       name: "section2Name",
       label: "section label",
-      fields: [
+      formFields: [
         {
           name: "fieldName",
           label: "field label",

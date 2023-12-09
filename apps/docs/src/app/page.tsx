@@ -1,4 +1,4 @@
-import { FormGenerator } from "@mmd/core";
+import FormGenerator from "@mmd/core";
 import formData from "./data/testForm";
 
 export default function Page() {

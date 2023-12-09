@@ -1,10 +1,6 @@
-import { FormField } from "./FormField";
+import { TFormSection } from "./formSection";
 
-export type FormSchema = {
+export type TFormSchema = {
   name: string;
-  sections: Array<{
-    name: string;
-    label: string;
-    fields: Array<FormField>;
-  }>;
+  sections: Array<TFormSection>;
 };
