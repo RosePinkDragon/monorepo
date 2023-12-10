@@ -23,7 +23,6 @@ const baseSchemaGenerator = (schema: TFormSchema, obj: FormikValues) => {
 
     const { type: fieldType } = field;
     let rule = baseRuleGenerator(field);
-
     if (rule && field.required) {
       rule = rule.required(`Please enter ${field.label.toLowerCase()}`);
 

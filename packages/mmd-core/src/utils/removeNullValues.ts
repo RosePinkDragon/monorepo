@@ -1,13 +1,8 @@
 import { FormikValues } from "formik";
+import { omitBy, isNull } from "lodash";
 
 const removeNullValues = (obj: FormikValues) => {
-  const newObj: FormikValues = {};
-  for (const key in obj) {
-    if (obj[key] !== null) {
-      newObj[key] = obj[key];
-    }
-  }
-  return newObj;
+  return omitBy(obj, isNull);
 };
 
 export default removeNullValues;

@@ -6,6 +6,7 @@ import getInitialValuesFromForm from "../utils/getInitialValuesFromForm";
 import { FormHeading } from "./FormComponents";
 import { IFormGeneratorProps } from "../types/formGenerator";
 import createValidationSchema from "../utils/validationSchemaGenerator";
+import { Button } from "@mui/material";
 
 const FormGenerator = ({
   formData,
@@ -58,12 +59,14 @@ const FormGenerator = ({
             return (
               <FormSection
                 {...section}
+                key={section.name}
                 AfterFieldComponent={AfterFieldComponent}
               />
             );
           })}
 
           {FormEndComponent}
+          <Button type="submit">asfasdf </Button>
         </Form>
       )}
     </Formik>

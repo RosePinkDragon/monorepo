@@ -16,7 +16,7 @@ function textRuleGenerator(field: TFormField) {
         `Minimum Allowed length is ${field.minLen} characters`
       );
     }
-    if (field.minLen) {
+    if (field.maxLen) {
       rule = rule.max(
         field.maxLen,
         `Maximum Allowed length is ${field.maxLen} characters`

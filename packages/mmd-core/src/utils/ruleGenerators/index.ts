@@ -9,8 +9,6 @@ import { TMultiFields } from "../../types/formField";
 export const textTypeFields: Array<TFormField["type"]> = [
   "text",
   "textArea",
-  "text",
-  "textArea",
   "tel",
   "email",
   "password",

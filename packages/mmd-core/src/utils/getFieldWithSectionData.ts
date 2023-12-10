@@ -12,8 +12,8 @@ export const getFieldWithSection = (schema: TFormSchema, key: string) => {
       section.formFields.map((formField) => ({
         formField,
         sectionName: section.name,
-        isDependentOn: section.sectionDependentOn || null,
-        dependentOnValue: section.enabledOnValue || null,
+        isDependentOn: section.sectionDependentOn ?? null,
+        dependentOnValue: section.enabledOnValue ?? null,
       }))
     )
     .find((field) => field.formField?.name === key);

@@ -1,4 +1,4 @@
-import { TFormSchema } from "@mmd/core";
+import { TFormSchema } from "../../src";
 
 const formData: TFormSchema = {
   name: "form name",

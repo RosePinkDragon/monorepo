@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders the section heading properly > renders SectionHeading with the provided heading and style 1`] = `
+<h4
+  class="MuiTypography-root MuiTypography-h4 css-ruvbwe-MuiTypography-root"
+>
+  Test Heading
+</h4>
+`;
