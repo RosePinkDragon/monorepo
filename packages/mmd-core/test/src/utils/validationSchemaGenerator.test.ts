@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import createValidationSchema from "../../../src/utils/validationSchemaGenerator";
-import formData from "../../data/testForm";
+import formData from "../../data/utilsTestForm";
 import * as Yup from "yup";
 
 describe("Validation Schema Generator", () => {

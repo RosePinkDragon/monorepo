@@ -10,7 +10,10 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@mmd/core": "workspace:*",
+    "@mui/material": "^5.14.20",
     "@next/eslint-plugin-next": "^12.3.0",
     "next": "^14.0.3",
     "react": "^18.2.0",

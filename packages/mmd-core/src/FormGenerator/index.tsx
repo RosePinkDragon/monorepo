@@ -64,9 +64,7 @@ const FormGenerator = ({
               />
             );
           })}
-
           {FormEndComponent}
-          <Button type="submit">asfasdf </Button>
         </Form>
       )}
     </Formik>

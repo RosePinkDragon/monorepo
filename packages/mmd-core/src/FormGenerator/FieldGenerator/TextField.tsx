@@ -19,8 +19,9 @@ const TextInput = ({ field }: { field: TextFieldProps }) => {
         value={values[name]}
         type={type}
         required={required}
+        aria-label={name}
       />
-      <p>{errors[name] || "no eror"}</p>
+      {errors[name] && <p>{errors[name]?.toString()}</p>}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import getInitialValuesFromForm from "../../../src/utils/getInitialValuesFromForm";
-import formData from "../../data/testForm";
+import formData from "../../data/utilsTestForm";
 
 describe("getInitialValuesFromForm", () => {
   test("should return initial values for fields with initialValues", () => {

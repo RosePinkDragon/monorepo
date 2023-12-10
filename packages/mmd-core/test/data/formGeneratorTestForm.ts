@@ -1,6 +1,6 @@
-import { TFormSchema } from "./types";
+import { TFormSchema } from "../../src";
 
-const formData: TFormSchema = {
+const formGeneratorTestForm: TFormSchema = {
   name: "form name",
   sections: [
     {
@@ -11,13 +11,13 @@ const formData: TFormSchema = {
           name: "field1Name",
           label: "field 1 label",
           type: "text",
-          initialValue: "initialValueForField1",
+          initialValue: "initialValueForField",
           required: true,
         },
         {
           name: "field2Name",
           label: "field 3 label",
-          initialValue: "initialValueForField2",
+          initialValue: "initialValueForField",
           type: "text",
           regEx: "^[a-zA-Z ]*$",
           errMsg: "Enter Proper Name",
@@ -27,7 +27,7 @@ const formData: TFormSchema = {
     },
     {
       name: "section2Name",
-      label: "section label",
+      label: "section 2 label",
       enabledOnValue: "test",
       sectionDependentOn: "field1Name",
       formFields: [
@@ -35,11 +35,10 @@ const formData: TFormSchema = {
           name: "fieldName",
           label: "field 1 label",
           type: "text",
-          required: true,
         },
       ],
     },
   ],
 };
 
-export default formData;
+export default formGeneratorTestForm;
