@@ -6,6 +6,7 @@ const formData: TFormSchema = {
     {
       name: "section1Name",
       label: "section label",
+      isExpandableSection: true,
       formFields: [
         {
           name: "field1Name",

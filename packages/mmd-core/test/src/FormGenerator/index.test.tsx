@@ -58,6 +58,35 @@ describe("FormGenerator component", () => {
     });
   });
 
+  test("calls submitHandler with the passed initial values and merges the given values", async () => {
+    const mockSubmitHandler = vi.fn();
+    const { user } = setupUserEvent(
+      <FormGenerator
+        formData={formGeneratorTestForm}
+        submitHandler={mockSubmitHandler}
+        initialFormValues={{
+          testValue: "someValue",
+        }}
+        FormEndComponent={<button type="submit">Submit</button>}
+      />
+    );
+
+    // Submit the form
+    user.click(screen.getByText("Submit"));
+
+    // Wait for the submit handler to be called
+    await waitFor(() => {
+      expect(mockSubmitHandler).toHaveBeenCalledWith({
+        act: expect.any(Object),
+        values: {
+          testValue: "someValue",
+          field1Name: "initialValueForField",
+          field2Name: "initialValueForField",
+        },
+      });
+    });
+  });
+
   test("does not submit the form in view-only mode", async () => {
     const mockSubmitHandler = vi.fn();
     const { getByText } = render(

@@ -39,7 +39,7 @@ export type TFormField = {
   required?: boolean;
   initialValue?: any;
   colspan?: number;
-  isDisabledField?: true;
+  isDisabledField?: boolean;
   isDependentOn?: string;
   dependentOnValues?: any[];
   regEx?: RegExp | string;

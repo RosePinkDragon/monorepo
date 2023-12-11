@@ -7,7 +7,7 @@ export type TComponentRegistry = {
   [key: string]: ({ field }: { field: any }) => ReactElement | null;
 };
 
-const componentRegistry: TComponentRegistry = {
+export const componentRegistry: TComponentRegistry = {
   text: TextInput,
   date: TextInput,
   arrayField: TextInput,
