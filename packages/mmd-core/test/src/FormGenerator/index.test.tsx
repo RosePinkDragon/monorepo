@@ -1,6 +1,12 @@
 import { Button } from "@mui/material";
-import { describe, it, test, vi } from "vitest";
-import { render, fireEvent, waitFor, screen } from "@testing-library/react";
+import { describe, test, vi } from "vitest";
+import {
+  render,
+  fireEvent,
+  waitFor,
+  screen,
+  act,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactElement } from "react";
 
@@ -17,14 +23,15 @@ function setupUserEvent(jsx: ReactElement) {
 }
 
 describe("It renders the form correctly", () => {
-  test("render correctly", () => {
-    const { getByText } = render(
+  test("render fields correctly", () => {
+    const { getByText, getByLabelText } = render(
       <FormGenerator formData={formGeneratorTestForm} isViewOnly={true} />
     );
 
     expect(getByText("form name")).toBeInTheDocument();
 
     expect(getByText("field 1 label")).toBeInTheDocument();
+    expect(getByLabelText("field1Name").querySelector("input")).toBeDisabled();
   });
 });
 
@@ -72,7 +79,9 @@ describe("FormGenerator component", () => {
     );
 
     // Submit the form
-    user.click(screen.getByText("Submit"));
+    act(() => {
+      user.click(screen.getByText("Submit"));
+    });
 
     // Wait for the submit handler to be called
     await waitFor(() => {

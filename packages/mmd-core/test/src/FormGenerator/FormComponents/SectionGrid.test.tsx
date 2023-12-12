@@ -98,4 +98,23 @@ describe("SectionGrid Component", () => {
     expect(inputElement).not.toBeInTheDocument();
     expect(inputElement2).not.toBeInTheDocument();
   });
+
+  test("handles view only fields", () => {
+    setupUserEvent(
+      <>
+        {renderWithFormik(
+          <SectionGrid
+            name="testSection"
+            elementSize={2}
+            isViewOnly
+            currentFormFields={formData.sections[0].formFields}
+          />
+        )}
+      </>
+    );
+
+    const inputElement = screen.getByLabelText("field1").querySelector("input");
+
+    expect(inputElement).toBeDisabled();
+  });
 });
