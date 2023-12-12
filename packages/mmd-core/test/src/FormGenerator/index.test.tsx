@@ -108,7 +108,7 @@ describe("FormGenerator component", () => {
     test("does not show section on invalid value", () => {
       const mockSubmitHandler = vi.fn();
 
-      const { user } = setupUserEvent(
+      setupUserEvent(
         <FormGenerator
           formData={formGeneratorTestForm}
           submitHandler={mockSubmitHandler}
