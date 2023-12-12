@@ -34,18 +34,23 @@ const FieldGenerator = ({
   const Component = componentRegistry[field.type];
   const { values } = useFormikContext<FormikValues>();
 
-  const [updatedField, setUpdatedField] = useState(field);
+  const [updatedField, setUpdatedField] = useState({ ...field });
 
   useEffect(() => {
     setUpdatedField(field);
   }, [field]);
 
   useEffect(() => {
-    if (field.dependentOnValues && field.isDependentOn && field.isDependentOn) {
-      if (!field.dependentOnValues.includes(values[field.isDependentOn]))
+    if (
+      field.dependentOnValues &&
+      field.isDependentOn &&
+      !field.isDisabledField
+    ) {
+      if (!field.dependentOnValues.includes(values[field.isDependentOn])) {
         setUpdatedField({ ...field, isDisabledField: true });
+      }
     }
-  }, []);
+  }, [values, field]);
 
   if (!Component) return null;
 

@@ -3,7 +3,7 @@ import { TextFieldProps } from "../../types/formField";
 import { FormikValues, useFormikContext } from "formik";
 
 const TextInput = ({ field }: { field: TextFieldProps }) => {
-  const { name, label, type, required, placeholder } = field;
+  const { name, label, type, required, placeholder, isDisabledField } = field;
   const { values, handleChange, errors } = useFormikContext<FormikValues>();
 
   return (
@@ -15,6 +15,7 @@ const TextInput = ({ field }: { field: TextFieldProps }) => {
         placeholder={placeholder}
         name={name}
         label={label}
+        disabled={isDisabledField}
         onChange={handleChange}
         value={values[name]}
         type={type}

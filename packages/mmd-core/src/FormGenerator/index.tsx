@@ -6,7 +6,6 @@ import getInitialValuesFromForm from "../utils/getInitialValuesFromForm";
 import { FormHeading } from "./FormComponents";
 import { IFormGeneratorProps } from "../types/formGenerator";
 import createValidationSchema from "../utils/validationSchemaGenerator";
-import { Button } from "@mui/material";
 
 const FormGenerator = ({
   formData,
@@ -60,6 +59,7 @@ const FormGenerator = ({
               <FormSection
                 {...section}
                 key={section.name}
+                isViewOnly={isViewOnly}
                 AfterFieldComponent={AfterFieldComponent}
               />
             );

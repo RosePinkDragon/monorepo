@@ -19,6 +19,12 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "devDependencies": {
     "@mmd/eslint-config": "workspace:*",
     "@mmd/tsconfig": "workspace:*",

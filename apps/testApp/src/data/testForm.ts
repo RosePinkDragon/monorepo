@@ -6,7 +6,6 @@ const formData: TFormSchema = {
     {
       name: "section1Name",
       label: "section label",
-      isExpandableSection: true,
       formFields: [
         {
           name: "field1Name",
@@ -14,10 +13,13 @@ const formData: TFormSchema = {
           type: "text",
           initialValue: "initialValueForField1",
           required: true,
+          isDisabledField: false,
         },
         {
           name: "field2Name",
-          label: "field 3 label",
+          label: "field 2 label",
+          isDependentOn: "field1Name",
+          dependentOnValues: ["testVal"],
           initialValue: "initialValueForField2",
           type: "text",
           regEx: "^[a-zA-Z ]*$",

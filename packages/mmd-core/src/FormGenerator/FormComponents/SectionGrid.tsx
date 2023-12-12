@@ -112,7 +112,9 @@ const SectionGrid: React.FC<SectiongridProps> = ({
                                         ? true
                                         : field.isDisabledField,
                                     }}
-                                    AfterFieldComponent={AfterFieldComponent}
+                                    AfterFieldComponent={
+                                      AfterFieldComponent as any
+                                    }
                                   />
                                 </Grid>
                               );
@@ -152,7 +154,7 @@ const SectionGrid: React.FC<SectiongridProps> = ({
                   ...field,
                   isDisabledField: isViewOnly ? true : field.isDisabledField,
                 }}
-                AfterFieldComponent={AfterFieldComponent}
+                AfterFieldComponent={AfterFieldComponent as any}
               />
             )}
           </Grid>

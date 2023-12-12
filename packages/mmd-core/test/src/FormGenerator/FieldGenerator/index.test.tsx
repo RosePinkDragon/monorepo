@@ -1,10 +1,22 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import FieldGenerator, {
   componentRegistry,
   registerComponent,
 } from "../../../../src/FormGenerator/FieldGenerator";
-import { vi } from "vitest";
 import { renderWithFormik } from "../FormSection.test";
+import { TFormField } from "../../../../src";
+import { TTextField } from "../../../../src/types/formField";
+import userEvent from "@testing-library/user-event";
+import { ReactElement } from "react";
+
+function setupUserEvent(jsx: ReactElement) {
+  return {
+    user: userEvent.setup(),
+    // Import `render` from the framework library of your choice.
+    // See https://testing-library.com/docs/dom-testing-library/install#wrappers
+    ...render(jsx),
+  };
+}
 
 // Test case for registerComponent function
 describe("it registers the component properly", () => {
@@ -21,31 +33,47 @@ describe("it registers the component properly", () => {
   });
 });
 
-// Test case for the useEffect in FieldGenerator
-test("useEffect sets isDisabledField correctly based on dependentOnValues and isDependentOn", () => {
-  const mockField = {
-    name: "test field",
-    label: "test label",
-    dependentOnValues: ["dependentValue"],
-    isDependentOn: "mockDependentValue",
-    isDisabledField: false,
-    type: "text",
-  } as any;
+describe("it disables dependent fields correctly", () => {
+  // Test case for the useEffect in FieldGenerator
+  test("it disables textfield correctly", async () => {
+    const mockField: TFormField & TTextField = {
+      name: "testField1",
+      label: "test label",
+      dependentOnValues: ["dependentValue"],
+      isDependentOn: "testField2",
+      isDisabledField: false,
+      type: "text",
+    };
 
-  // Mock the setUpdatedField function
-  const mockSetUpdatedField = vi.fn();
+    const mockField2: TFormField & TTextField = {
+      name: "testField2",
+      label: "test label 2",
+      isDisabledField: false,
+      type: "text",
+    };
 
-  // Render the FieldGenerator component
-  renderWithFormik(
-    <>
-      render(
-      <FieldGenerator field={mockField} />)
-    </>
-  );
+    // Render the FieldGenerator component
 
-  // Assert that setUpdatedField is called with the correct updated field
-  expect(mockSetUpdatedField).toHaveBeenCalledWith({
-    ...mockField,
-    isDisabledField: false,
+    setupUserEvent(
+      <>
+        {renderWithFormik(
+          <>
+            <FieldGenerator field={mockField} />
+            <FieldGenerator field={mockField2} />
+          </>
+        )}
+      </>
+    );
+
+    const disabledField = screen
+      .getByLabelText("testField1")
+      .querySelector("input");
+
+    expect(disabledField).toBeDisabled();
+
+    const inputTwo = screen.getByLabelText("testField2").querySelector("input");
+    if (!inputTwo) return expect(true).toBe(false);
+    fireEvent.change(inputTwo, { target: { value: "testVal" } });
+    expect(disabledField).toBeDisabled();
   });
 });
