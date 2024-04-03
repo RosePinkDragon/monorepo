@@ -1,16 +1,24 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import TextInput from "./TextField";
 import { TFormField } from "../../types";
-import { FormikValues, useFormikContext } from "formik";
+import useGetFieldData from "../hooks/useGetFieldData";
+import DateInputField from "./DateField";
+
+export type TComponentRegistryProps = {
+  field: any;
+  value: string;
+  error: string;
+  touched: boolean;
+  isDisabled: boolean;
+};
 
 export type TComponentRegistry = {
-  [key: string]: ({ field }: { field: any }) => ReactElement | null;
+  [key: string]: (data: TComponentRegistryProps) => ReactElement | null;
 };
 
 export const componentRegistry: TComponentRegistry = {
   text: TextInput,
-  date: TextInput,
-  arrayField: TextInput,
+  date: DateInputField,
 };
 
 export const registerComponent = (
@@ -32,32 +40,20 @@ const FieldGenerator = ({
   }) => ReactElement | null;
 }) => {
   const Component = componentRegistry[field.type];
-  const { values } = useFormikContext<FormikValues>();
 
-  const [updatedField, setUpdatedField] = useState({ ...field });
-
-  useEffect(() => {
-    setUpdatedField(field);
-  }, [field]);
-
-  useEffect(() => {
-    if (
-      field.dependentOnValues &&
-      field.isDependentOn &&
-      !field.isDisabledField
-    ) {
-      if (!field.dependentOnValues.includes(values[field.isDependentOn])) {
-        setUpdatedField({ ...field, isDisabledField: true });
-      }
-    }
-  }, [values, field]);
-
+  const { value, error, touched, isDisabled } = useGetFieldData(field);
   if (!Component) return null;
 
   return (
     <>
-      <Component field={updatedField} />
-      {AfterFieldComponent && <AfterFieldComponent field={updatedField} />}
+      <Component
+        field={field}
+        value={value}
+        error={error}
+        touched={touched}
+        isDisabled={isDisabled}
+      />
+      {AfterFieldComponent && <AfterFieldComponent field={field} />}
     </>
   );
 };

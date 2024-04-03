@@ -1,14 +1,15 @@
 export type TTextField = {
   type: "text" | "textArea" | "tel" | "email" | "password" | "number";
   placeholder?: string;
-  value?: string;
   minLen?: number;
   maxLen?: number;
+  value?: string;
 };
 
 export type TDateField = {
   type: "date";
-  min?: Date;
+  min?: Date | string;
+  max?: Date | string;
 };
 
 export type TArrayField = {
@@ -24,14 +25,22 @@ export type TOtherFields = {
   value?: any;
 };
 
-export type TMultiFields = {
-  type: "select" | "multi-select" | "checkbox" | "radio";
-  options: Array<{
-    label: string;
-    value: string | number | boolean;
-  }>;
-  value?: string | number | boolean | Array<string | number | boolean>;
-};
+export type TMultiFields =
+  | ({
+      // type: "select" | "multi-select" | "checkbox" | "radio";
+      options: Array<{
+        label: string;
+        value: string | number | boolean;
+      }>;
+    } & {
+      type: "multi-select" | "checkbox";
+      value?: Array<string | number | boolean>;
+    })
+  | {
+      type: "select" | "radio";
+      // type: "multi-select" | "checkbox";
+      value?: string | number | boolean;
+    };
 
 export type TFormField = {
   name: string;
@@ -46,5 +55,3 @@ export type TFormField = {
   errMsg?: string;
   tooltips?: string[];
 } & (TTextField | TDateField | TArrayField | TOtherFields | TMultiFields);
-
-export type TextFieldProps = TTextField & TFormField;

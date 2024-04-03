@@ -28,20 +28,35 @@ const formData: TFormSchema = {
         },
       ],
     },
-    {
-      name: "section2Name",
-      label: "section label",
-      enabledOnValue: "test",
-      sectionDependentOn: "field1Name",
-      formFields: [
-        {
-          name: "fieldName",
-          label: "field 1 label",
-          type: "text",
-          required: true,
-        },
-      ],
-    },
+    // {
+    //   name: "section2Name",
+    //   label: "section label",
+    //   // enabledOnValue: "test",
+    //   // sectionDependentOn: "field1Name",
+    //   formFields: [
+    //     // {
+    //     //   name: "fieldName",
+    //     //   label: "field 1 label",
+    //     //   type: "date",
+    //     //   required: true,
+    //     // },
+    //     {
+    //       name: "arrayfieldName",
+    //       label: "arrat field 1 label",
+    //       type: "arrayField",
+    //       colspan: 3,
+    //       formFields: [
+    //         {
+    //           name: "fieldNamearr1",
+    //           label: "field 1 label arr",
+    //           type: "text",
+    //           required: true,
+    //         },
+    //       ],
+    //       required: true,
+    //     },
+    //   ],
+    // },
   ],
 };
 
