@@ -1,4 +1,4 @@
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import { FormikValues, useFormikContext } from "formik";
 import { TFormField } from "../../types";
 import { TDateField } from "../../types/formField";
