@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { TextField } from "@mui/material";
-import { FormikValues, useFormikContext } from "formik";
+import { memo, useState } from "react";
+import { TextField, debounce } from "@mui/material";
+import { FastField, FormikValues, useFormikContext } from "formik";
 import { TFormField } from "../../types";
 import { TTextField } from "../../types/formField";
 
@@ -74,10 +74,21 @@ const TextInput = ({
   touched: boolean;
   isDisabled: boolean;
 }) => {
-  const { name, label, type, required, placeholder } = field;
-  const { handleChange } = useFormikContext<FormikValues>();
+  console.log(value);
+  const [inputValue, setInputValue] = useState(value);
 
-  // console.log("isDisabled text :" + isDisabled);
+  const { name, label, type, required, placeholder } = field;
+
+  const { handleChange } = useFormikContext<FormikValues>();
+  const debouncedInput = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e);
+  }, 300);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setInputValue(value);
+    debouncedInput(event);
+  };
 
   return (
     <TextInputField
@@ -85,8 +96,8 @@ const TextInput = ({
       placeholder={placeholder}
       label={label}
       isDisabledField={isDisabled}
-      handleChange={handleChange}
-      value={value}
+      handleChange={handleInputChange}
+      value={inputValue}
       type={type}
       required={required}
       touched={touched}
