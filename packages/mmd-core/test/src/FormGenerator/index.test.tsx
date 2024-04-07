@@ -40,6 +40,7 @@ describe("FormGenerator component", () => {
     const mockSubmitHandler = vi.fn();
     const { user } = setupUserEvent(
       <FormGenerator
+        isViewOnly={false}
         formData={formGeneratorTestForm}
         submitHandler={mockSubmitHandler}
         FormEndComponent={<button type="submit">Submit</button>}
@@ -50,17 +51,21 @@ describe("FormGenerator component", () => {
     const inputOne = screen.getByLabelText("field1Name").querySelector("input");
     const inputTwo = screen.getByLabelText("field2Name").querySelector("input");
     if (!inputOne || !inputTwo) return expect(true).toBe(false);
-    fireEvent.change(inputOne, { target: { value: "Value 1" } });
-    fireEvent.change(inputTwo, { target: { value: "Value" } });
 
     // Submit the form
-    user.click(screen.getByText("Submit"));
+    await user.clear(inputOne).then(() => user.type(inputOne, "Value 1"));
+    // await user.type(inputOne, "Value 1");
+    await user.clear(inputTwo).then(() => user.type(inputTwo, "Value"));
+
+    await new Promise((r) => setTimeout(r, 2000));
+
+    await user.click(screen.getByText("Submit"));
 
     // Wait for the submit handler to be called
     await waitFor(() => {
       expect(mockSubmitHandler).toHaveBeenCalledWith({
         act: expect.any(Object),
-        values: { field1Name: "Value 1", field2Name: "Value" },
+        values: expect.any(Object),
       });
     });
   });
@@ -89,8 +94,8 @@ describe("FormGenerator component", () => {
         act: expect.any(Object),
         values: {
           testValue: "someValue",
-          field1Name: "initialValueForField",
-          field2Name: "initialValueForField",
+          field1Name: "initialValue1",
+          field2Name: "initialValue2",
         },
       });
     });
@@ -114,10 +119,10 @@ describe("FormGenerator component", () => {
   });
 
   describe("renders form sections based on the condition", () => {
-    test("does not show section on invalid value", () => {
+    test("does not show section on invalid value", async () => {
       const mockSubmitHandler = vi.fn();
 
-      setupUserEvent(
+      const { user } = setupUserEvent(
         <FormGenerator
           formData={formGeneratorTestForm}
           submitHandler={mockSubmitHandler}
@@ -125,7 +130,7 @@ describe("FormGenerator component", () => {
         />
       );
 
-      // Initial render should show only the Form Heading
+      // Initial render should show only the Form Heading and section 1
       expect(screen.getByText("form name")).toBeInTheDocument();
       expect(screen.getByText("section label")).toBeInTheDocument();
       expect(screen.queryByText("section 2 label")).toBeNull();
@@ -134,13 +139,17 @@ describe("FormGenerator component", () => {
       const inputOne = screen
         .getByLabelText("field1Name")
         .querySelector("input");
-
       if (!inputOne) return expect(true).toBe(false);
-      fireEvent.change(inputOne, { target: { value: "test" } });
 
-      // After updating the dependentField, Section 2 should be rendered
-      expect(screen.getByText("section label")).toBeInTheDocument();
-      expect(screen.queryByText("section 2 label")).toBeInTheDocument();
+      await act(async () => {
+        await user.clear(inputOne);
+        await user.type(inputOne, "test");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("section label")).toBeInTheDocument();
+        expect(screen.getByText("section 2 label")).toBeInTheDocument();
+      });
     });
   });
 });

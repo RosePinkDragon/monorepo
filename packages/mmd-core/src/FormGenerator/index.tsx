@@ -1,4 +1,4 @@
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import { useMemo } from "react";
 import FormSection from "./FormSection";
 
@@ -14,7 +14,7 @@ const FormGenerator = ({
   extendedSchema,
   initialFormErrors,
   initialFormValues,
-  isViewOnly,
+  isViewOnly = false,
   submitHandler,
 }: Readonly<IFormGeneratorProps>) => {
   const validationSchema = useMemo(
@@ -40,11 +40,16 @@ const FormGenerator = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, act) => {
-        if (!isViewOnly && submitHandler) submitHandler({ values, act });
+        if (isViewOnly || !submitHandler) {
+          return console.log(
+            "you are in view only mode or you have not passed submit handler"
+          );
+        }
+        submitHandler({ values, act });
       }}
     >
       {({ handleSubmit, values }) => (
-        <Form onSubmit={isViewOnly ? () => {} : handleSubmit}>
+        <form onSubmit={handleSubmit}>
           {formData.name && <FormHeading heading={formData.name} />}
           {formSections.map((section) => {
             if (
@@ -65,7 +70,7 @@ const FormGenerator = ({
             );
           })}
           {FormEndComponent}
-        </Form>
+        </form>
       )}
     </Formik>
   );
