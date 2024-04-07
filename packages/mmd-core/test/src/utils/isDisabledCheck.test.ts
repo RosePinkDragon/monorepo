@@ -34,6 +34,26 @@ describe("isDisabledCheck", () => {
     expect(result).toBe(true);
   });
 
+  it("should return true if dependentFieldValue is an array and field is not dependent on anything", () => {
+    const result = isDisabledCheck({
+      isDisabledField: false,
+      isDependentOn: "dependentField",
+      // dependentOnValues: ["value3", "value4"],
+      dependentFieldValue: ["value1", "value2"],
+    });
+    expect(result).toBe(false);
+  });
+
+  it("should return false if dependentFieldValue is an array and field is not dependent on anything", () => {
+    const result = isDisabledCheck({
+      isDisabledField: false,
+      isDependentOn: "dependentField",
+      // dependentOnValues: ["value3", "value4"],
+      dependentFieldValue: [],
+    });
+    expect(result).toBe(true);
+  });
+
   it("should return true if dependentFieldValue is not in dependentOnValues", () => {
     const result = isDisabledCheck({
       isDisabledField: false,
