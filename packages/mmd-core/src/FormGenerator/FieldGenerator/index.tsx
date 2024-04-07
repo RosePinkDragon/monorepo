@@ -1,24 +1,18 @@
-import { ReactElement } from "react";
+import { ReactElement, memo, useMemo } from "react";
 import TextInput from "./TextField";
 import { TFormField } from "../../types";
 import useGetFieldData from "../hooks/useGetFieldData";
 import DateInputField from "./DateField";
-
-export type TComponentRegistryProps = {
-  field: any;
-  value: string;
-  error: string;
-  touched: boolean;
-  isDisabled: boolean;
-};
+import FieldArrayType from "./FieldArray";
 
 export type TComponentRegistry = {
-  [key: string]: (data: TComponentRegistryProps) => ReactElement | null;
+  [key: string]: (data: any) => ReactElement | null;
 };
 
 export const componentRegistry: TComponentRegistry = {
   text: TextInput,
   date: DateInputField,
+  arrayField: FieldArrayType,
 };
 
 export const registerComponent = (

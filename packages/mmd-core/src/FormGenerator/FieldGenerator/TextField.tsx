@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import { TextField, debounce } from "@mui/material";
-import { FastField, FormikValues, useFormikContext } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import { TFormField } from "../../types";
 import { TTextField } from "../../types/formField";
 
@@ -74,7 +74,6 @@ const TextInput = ({
   touched: boolean;
   isDisabled: boolean;
 }) => {
-  console.log(value);
   const [inputValue, setInputValue] = useState(value);
 
   const { name, label, type, required, placeholder } = field;
