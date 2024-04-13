@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useMemo } from "react";
 import FormSection from "./FormSection";
 
@@ -49,7 +49,7 @@ const FormGenerator = ({
       }}
     >
       {({ handleSubmit, values }) => (
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           {formData.name && <FormHeading heading={formData.name} />}
           {formSections.map((section) => {
             if (
@@ -70,7 +70,7 @@ const FormGenerator = ({
             );
           })}
           {FormEndComponent}
-        </form>
+        </Form>
       )}
     </Formik>
   );

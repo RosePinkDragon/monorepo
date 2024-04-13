@@ -1,44 +1,51 @@
 import * as Yup from "yup";
 import type { TFormSchema } from "../types";
 import { FormikValues } from "formik";
-import { getFieldWithSection } from "./getFieldWithSectionData";
 import { baseRuleGenerator } from "./ruleGenerators";
 
 const baseSchemaGenerator = (schema: TFormSchema, obj: FormikValues) => {
-  const baseSchema = Object.keys(obj).reduce((prev, key) => {
-    const fieldData = getFieldWithSection(schema, key);
+  const baseSchema = schema.sections
+    .flatMap((section) => section.formFields)
+    .reduce<any>((accSection, field) => {
+      const {
+        name,
+        label,
+        required,
+        regEx,
+        errMsg,
+        isDependentOn,
+        dependentOnValues,
+      } = field;
+      let rule = baseRuleGenerator(field);
+      if (
+        dependentOnValues &&
+        isDependentOn &&
+        !dependentOnValues.includes(obj[isDependentOn])
+      )
+        return;
 
-    if (!fieldData) return prev;
+      if (!rule) rule = new Yup.MixedSchema<any>();
 
-    const { dependentOnValue, formField: field, isDependentOn } = fieldData;
+      if (required) {
+        rule = rule.required(`Please enter ${label.toLowerCase()}`);
+      }
 
-    if (!field) return prev;
-
-    if (
-      dependentOnValue &&
-      isDependentOn &&
-      obj[isDependentOn] !== dependentOnValue
-    )
-      return prev;
-
-    const { type: fieldType } = field;
-    let rule = baseRuleGenerator(field);
-    if (rule && field.required) {
-      rule = rule.required(`Please enter ${field.label.toLowerCase()}`);
-
-      if (fieldType !== "date" && field.regEx)
-        rule = rule.test("regex", field.errMsg ?? "Invalid Field", (val) => {
-          if (!val || val === "") return true;
-          const regexFromField = new RegExp(field.regEx ?? "");
-          return regexFromField.test(val.toString());
+      if (regEx) {
+        rule = rule.test("regex", errMsg ?? "Invalid Field", (val) => {
+          console.log(name, val);
+          if (!val || val === "") return !required;
+          const regex = new RegExp(regEx);
+          return regex.test(val.toString());
         });
-    }
-    if (rule) {
-      return { ...prev, [key]: rule };
-    }
-    return prev;
-  }, {});
+      }
 
+      if (rule) {
+        console.log(rule, name);
+        accSection[name] = rule;
+      }
+
+      return accSection;
+    }, {});
   return Yup.object(baseSchema);
 };
 
