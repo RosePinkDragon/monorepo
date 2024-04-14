@@ -10,6 +10,8 @@ export type TDateField = {
   type: "date";
   min?: Date | string;
   max?: Date | string;
+  beforeDate?: string;
+  afterDate?: string;
 };
 
 export type TArrayField = {
@@ -26,21 +28,23 @@ export type TOtherFields = {
 };
 
 export type TMultiFields =
-  | ({
+  | {
       // type: "select" | "multi-select" | "checkbox" | "radio";
       options: Array<{
         label: string;
         value: string | number | boolean;
       }>;
-    } & {
-      type: "multi-select" | "checkbox";
-      value?: Array<string | number | boolean>;
-    })
-  | {
-      type: "select" | "radio";
-      // type: "multi-select" | "checkbox";
-      value?: string | number | boolean;
-    };
+    } & (
+      | {
+          type: "multi-select" | "checkbox";
+          value?: Array<string | number | boolean>;
+        }
+      | {
+          type: "select" | "radio";
+          // type: "multi-select" | "checkbox";
+          value?: string | number | boolean;
+        }
+    );
 
 export type TFormField = {
   name: string;

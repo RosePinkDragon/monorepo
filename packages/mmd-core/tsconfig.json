@@ -3,6 +3,9 @@
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   }
 }

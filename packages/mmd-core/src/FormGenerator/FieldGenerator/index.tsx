@@ -1,9 +1,10 @@
-import { ReactElement, memo, useMemo } from "react";
 import TextInput from "./TextField";
-import { TFormField } from "../../types";
-import useGetFieldData from "../hooks/useGetFieldData";
 import DateInputField from "./DateField";
 import FieldArrayType from "./FieldArray";
+import useGetFieldData from "../hooks/useGetFieldData";
+
+import type { ReactElement } from "react";
+import type { TFormField } from "~/types";
 
 export type TComponentRegistry = {
   [key: string]: (data: any) => ReactElement | null;
@@ -35,9 +36,10 @@ const FieldGenerator = ({
 }) => {
   const Component = componentRegistry[field.type];
 
-  const { value, error, touched, isDisabled } = useGetFieldData(field);
-  if (!Component) return null;
+  const { value, error, touched, isDisabled, parentValue } =
+    useGetFieldData(field);
 
+  if (!Component) return null;
   return (
     <>
       <Component
@@ -46,6 +48,7 @@ const FieldGenerator = ({
         error={error}
         touched={touched}
         isDisabled={isDisabled}
+        parentValue={parentValue}
       />
       {AfterFieldComponent && <AfterFieldComponent field={field} />}
     </>

@@ -1,10 +1,13 @@
+import * as Yup from "yup";
+
+import { fieldSchemaGenerator } from "../validationSchemaGenerator";
 import dateRuleGenerator from "./dateRuleGenerator";
 import textRuleGenerator from "./textRuleGenerator";
 import multipleAnswersRuleGenerator from "./multipleAnswersRuleGenerator";
-import * as Yup from "yup";
 
-import { TFormField } from "../../types";
-import { TMultiFields } from "../../types/formField";
+import type { TFormField } from "~/types";
+import type { FormikValues } from "formik";
+import type { TMultiFields } from "~/types/formField";
 
 export const textTypeFields: Array<TFormField["type"]> = [
   "text",
@@ -21,7 +24,7 @@ export const selectableFieldTypes: Array<TFormField["type"]> = [
   "select",
 ];
 
-export const baseRuleGenerator = (field: TFormField) => {
+export const baseRuleGenerator = (field: TFormField, obj: FormikValues) => {
   const { type: fieldType } = field;
 
   if (textTypeFields.includes(fieldType)) return textRuleGenerator(field);
@@ -33,7 +36,20 @@ export const baseRuleGenerator = (field: TFormField) => {
   }
 
   if (fieldType === "date") {
-    return dateRuleGenerator();
+    return dateRuleGenerator(field as TFormField & { type: "date" });
+  }
+
+  if (fieldType === "arrayField") {
+    const innerObjSchema: { [key: string]: any } = {};
+
+    field.formFields.forEach((field) => {
+      innerObjSchema[field.name] = fieldSchemaGenerator(field, obj);
+    });
+
+    return Yup.array()
+      .of(Yup.object().shape(innerObjSchema))
+      .min(field.min ?? 0, `Please add at least ${field.min ?? 0} items`)
+      .max(field.max ?? 99, `Please add only upto ${field.max ?? 99} items`);
   }
 
   if (fieldType === "boolean") {

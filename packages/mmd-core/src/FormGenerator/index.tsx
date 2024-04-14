@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikTouched, FormikValues } from "formik";
 import { useMemo } from "react";
 import FormSection from "./FormSection";
 
@@ -35,7 +35,7 @@ const FormGenerator = ({
   return (
     <Formik
       initialErrors={initialFormErrors}
-      initialTouched={initialFormErrors}
+      initialTouched={initialFormErrors as FormikTouched<FormikValues>}
       validateOnMount={Boolean(initialFormErrors)}
       initialValues={initialValues}
       validationSchema={validationSchema}

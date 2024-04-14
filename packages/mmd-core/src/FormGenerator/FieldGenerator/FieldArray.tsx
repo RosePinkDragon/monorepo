@@ -1,11 +1,13 @@
-import Grid from "@mui/material/Unstable_Grid2";
 import { Typography, Box, Button, FormHelperText } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import FieldGenerator from ".";
+import React from "react";
 import { FieldArray } from "formik";
-import { TFormField } from "../../types";
-import { TArrayField } from "../../types/formField";
-import { ReactNode } from "react";
+
+import FieldGenerator from "./index";
+
+import type { ReactNode } from "react";
+import type { TFormField } from "~/types";
 
 const FieldArrayType = ({
   field,
@@ -15,7 +17,7 @@ const FieldArrayType = ({
   isDisabled,
   AfterFieldComponent,
 }: {
-  field: TFormField & TArrayField;
+  field: TFormField & { type: "arrayField" };
   value: Record<string, any>[];
   error: string;
   touched: boolean;
@@ -37,9 +39,8 @@ const FieldArrayType = ({
 
           {value?.length > 0 &&
             value.map((_: object, valIdx: number) => (
-              <>
+              <React.Fragment key={`${field.name}_${valIdx}`}>
                 <Box
-                  key={`${field.name}_${valIdx}`}
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
@@ -73,7 +74,7 @@ const FieldArrayType = ({
                   {field.formFields?.map((innerField) => {
                     const newName = `${field.name}.${valIdx}.${innerField.name}`;
                     return (
-                      <Grid key={field.name} xs={12} sm={12} md={6} lg={6}>
+                      <Grid key={newName} xs={12} sm={12} md={6} lg={6}>
                         <FieldGenerator
                           field={{
                             ...innerField,
@@ -88,7 +89,7 @@ const FieldArrayType = ({
                     );
                   })}
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
           {!isDisabled && (
             <Box
@@ -96,7 +97,9 @@ const FieldArrayType = ({
               justifyContent="space-between"
               alignItems="center"
             >
-              <FormHelperText error>{error}</FormHelperText>
+              <FormHelperText error>
+                {error && typeof error === "string" ? error : null}
+              </FormHelperText>
               <Button
                 sx={{
                   marginTop: "5px",

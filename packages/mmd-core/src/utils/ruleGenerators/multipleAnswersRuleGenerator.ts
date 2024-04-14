@@ -1,8 +1,10 @@
 import * as Yup from "yup";
-import type { TFormField } from "../../types";
-import { TMultiFields } from "../../types/formField";
 
-function multipleAnswersRuleGenerator(field: TFormField & TMultiFields) {
+import type { TFormField } from "~/types";
+
+function multipleAnswersRuleGenerator(
+  field: TFormField & { type: "multi-select" | "checkbox" | "select" | "radio" }
+) {
   const { type: fieldType } = field;
 
   let rule;
