@@ -1,4 +1,4 @@
-import { TFormSchema } from "../../src";
+import { TFormSchema } from "~/types";
 
 const expandableTestForm: TFormSchema = {
   name: "form name",

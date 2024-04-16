@@ -13,3 +13,13 @@ export type TFormSection = {
   AfterFieldComponent?: any;
   formFields: Array<TFormField>;
 };
+
+export type TSectiongridProps = {
+  name: string;
+  isDisabledSection?: boolean;
+  elementSize: number;
+  AfterFieldComponent?: React.FC<any> | null;
+  isInitialLoading?: boolean;
+  isViewOnly?: boolean;
+  currentFormFields: TFormField[];
+};

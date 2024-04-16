@@ -1,19 +1,10 @@
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { TFormField } from "../../types";
 import FieldGenerator from "../FieldGenerator";
 
-interface SectiongridProps {
-  name: string;
-  isDisabledSection?: boolean;
-  elementSize: number;
-  AfterFieldComponent?: React.FC<any> | null;
-  isInitialLoading?: boolean;
-  isViewOnly?: boolean;
-  currentFormFields: TFormField[];
-}
+import type { TSectiongridProps } from "~/types/formSection";
 
-const SectionGrid: React.FC<SectiongridProps> = ({
+const SectionGrid: React.FC<TSectiongridProps> = ({
   name,
   isDisabledSection,
   elementSize,

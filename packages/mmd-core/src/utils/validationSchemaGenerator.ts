@@ -28,11 +28,13 @@ export const fieldSchemaGenerator = (field: TFormField, obj: FormikValues) => {
   )
     return null;
 
-  if (required) {
+  // since we have boolean field, we need to check if the checkbox is checked
+  // this is already handled in the baseRuleGenerator
+  if (required && type !== "boolean") {
     rule = rule.required(`Please enter ${label.toLowerCase()}`);
   }
 
-  if (regEx) {
+  if (regEx && rule) {
     rule = rule.test("regex", errMsg ?? "Invalid Field", (val) => {
       console.log(name, val);
       if (!val || val === "") return !required;
@@ -41,7 +43,7 @@ export const fieldSchemaGenerator = (field: TFormField, obj: FormikValues) => {
     });
   }
 
-  return rule ? rule : null;
+  return rule || null;
 };
 
 // Helper function to check if a section should be enabled based on the dependent value

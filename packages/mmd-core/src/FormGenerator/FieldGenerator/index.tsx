@@ -1,6 +1,8 @@
 import TextInput from "./TextField";
 import DateInputField from "./DateField";
 import FieldArrayType from "./FieldArray";
+import BooleanField from "./BooleanField";
+
 import useGetFieldData from "../hooks/useGetFieldData";
 
 import type { ReactElement } from "react";
@@ -13,6 +15,7 @@ export type TComponentRegistry = {
 export const componentRegistry: TComponentRegistry = {
   text: TextInput,
   date: DateInputField,
+  boolean: BooleanField,
   arrayField: FieldArrayType,
 };
 

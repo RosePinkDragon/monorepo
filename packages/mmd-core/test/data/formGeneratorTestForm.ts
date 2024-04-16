@@ -1,4 +1,4 @@
-import { TFormSchema } from "../../src";
+import type { TFormSchema } from "~/types";
 
 const formGeneratorTestForm: TFormSchema = {
   name: "form name",
@@ -19,7 +19,7 @@ const formGeneratorTestForm: TFormSchema = {
           label: "field 3 label",
           initialValue: "initialValue2",
           type: "text",
-          // regEx: "^[a-zA-Z ]*$",
+          regEx: "^[a-zA-Z ]*$",
           errMsg: "Enter Proper Name",
           required: true,
         },

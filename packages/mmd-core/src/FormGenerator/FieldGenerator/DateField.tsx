@@ -1,7 +1,8 @@
 import { DatePicker } from "@mui/x-date-pickers";
-import { FormikValues, useFormikContext } from "formik";
-import { TFormField } from "../../types";
-import { TDateField } from "../../types/formField";
+import { useFormikContext } from "formik";
+
+import type { FormikValues } from "formik";
+import type { TFormField } from "~/types";
 
 const DateInputField = ({
   field,
@@ -9,7 +10,7 @@ const DateInputField = ({
   error,
   touched,
 }: {
-  field: TFormField & TDateField;
+  field: TFormField & { type: "date" };
   value: string;
   error: string;
   touched: boolean;

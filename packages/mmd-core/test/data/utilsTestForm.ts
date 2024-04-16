@@ -1,4 +1,4 @@
-import { TFormSchema } from "../../src";
+import type { TFormSchema } from "~/types";
 
 const formData: TFormSchema = {
   name: "form name",

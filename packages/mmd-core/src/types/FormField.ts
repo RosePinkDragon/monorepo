@@ -24,6 +24,7 @@ export type TArrayField = {
 
 export type TOtherFields = {
   type: "boolean";
+  placeholder?: string;
   value?: any;
 };
 

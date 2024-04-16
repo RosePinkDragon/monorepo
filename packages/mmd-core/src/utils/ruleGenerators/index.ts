@@ -24,6 +24,13 @@ export const selectableFieldTypes: Array<TFormField["type"]> = [
   "select",
 ];
 
+/**
+ * Generates a Yup validation rule based on the provided field and object.
+ *
+ * @param field - The field object containing information about the field.
+ * @param obj - The FormikValues object containing the form values.
+ * @returns A Yup validation rule for the field.
+ */
 export const baseRuleGenerator = (field: TFormField, obj: FormikValues) => {
   const { type: fieldType } = field;
 
@@ -53,8 +60,12 @@ export const baseRuleGenerator = (field: TFormField, obj: FormikValues) => {
   }
 
   if (fieldType === "boolean") {
+    const checkboxName = `${field.name}-check`;
+    const isCheckboxChecked =
+      Array.isArray(obj[checkboxName]) && obj[checkboxName].includes("checked");
+
     return Yup.string().when(`${field.name}-changer`, {
-      is: (val: string[]) => val?.includes("on"), // alternatively: (val) => val == true
+      is: isCheckboxChecked, // alternatively: (val) => val == true
       then: (sch) =>
         sch.required("This field is required. Please enter the details"),
       otherwise: (sch) => sch.notRequired().nullable(),

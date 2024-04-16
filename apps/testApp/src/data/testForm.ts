@@ -26,6 +26,17 @@ const formData: TFormSchema = {
           errMsg: "Enter Proper Name",
           required: true,
         },
+        {
+          name: "field3Name",
+          label: "field 3 label",
+          // isDependentOn: "field1Name",
+          // dependentOnValues: ["testVal"],
+          // initialValue: "initialValueForField2",
+          type: "boolean",
+          regEx: "^[a-zA-Z ]*$",
+          errMsg: "Enter Proper Name",
+          required: true,
+        },
       ],
     },
     // {

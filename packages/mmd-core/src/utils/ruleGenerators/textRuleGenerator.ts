@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { TFormField } from "../../types";
+import type { TFormField } from "~/types";
 
 function textRuleGenerator(field: TFormField) {
   let rule = Yup.string();
