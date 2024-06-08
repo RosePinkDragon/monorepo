@@ -27,6 +27,18 @@ const formData: TFormSchema = {
           required: true,
         },
         {
+          name: "fieldSelect",
+          label: "field 2 seclect",
+          type: "select",
+          options: [
+            {
+              value: "1",
+              label: "Option 1",
+            },
+          ],
+          required: true,
+        },
+        {
           name: "field3Name",
           label: "field 3 label",
           // isDependentOn: "field1Name",

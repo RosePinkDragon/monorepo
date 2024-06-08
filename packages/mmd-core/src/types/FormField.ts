@@ -1,3 +1,8 @@
+export type TMultiChoiceFieldOptions = {
+  label: string;
+  value: string | number | boolean;
+};
+
 export type TTextField = {
   type: "text" | "textArea" | "tel" | "email" | "password" | "number";
   placeholder?: string;
@@ -30,11 +35,10 @@ export type TOtherFields = {
 
 export type TMultiFields =
   | {
-      // type: "select" | "multi-select" | "checkbox" | "radio";
-      options: Array<{
-        label: string;
-        value: string | number | boolean;
-      }>;
+      api?: string;
+      placeholder?: string;
+      isApiDependentField?: boolean;
+      options: Array<TMultiChoiceFieldOptions>;
     } & (
       | {
           type: "multi-select" | "checkbox";

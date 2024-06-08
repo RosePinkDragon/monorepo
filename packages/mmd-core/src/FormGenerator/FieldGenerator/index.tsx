@@ -7,6 +7,7 @@ import useGetFieldData from "../hooks/useGetFieldData";
 
 import type { ReactElement } from "react";
 import type { TFormField } from "~/types";
+import SelectInput from "./SelectInput";
 
 export type TComponentRegistry = {
   [key: string]: (data: any) => ReactElement | null;
@@ -17,6 +18,7 @@ export const componentRegistry: TComponentRegistry = {
   date: DateInputField,
   boolean: BooleanField,
   arrayField: FieldArrayType,
+  select: SelectInput,
 };
 
 export const registerComponent = (
